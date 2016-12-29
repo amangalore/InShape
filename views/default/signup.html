@@ -1,0 +1,67 @@
+{{extend 'layout.html'}}
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCwNe5k0GGnAoTbTIu4E7DDhW-hWqlyn6k",
+    authDomain: "inshape-1f517.firebaseapp.com",
+    databaseURL: "https://inshape-1f517.firebaseio.com",
+    storageBucket: "inshape-1f517.appspot.com",
+    messagingSenderId: "727790530768"
+  };
+  firebase.initializeApp(config);
+</script>
+<script type="text/javascript">
+	function signUp() {
+		var isError = false;
+		var email = document.getElementById('create_username').value;
+		if (document.getElementById('create_password').value == document.getElementById('check_password').value) {
+			var password = document.getElementById('create_password').value;
+		} else {
+			alert('Passwords not matching.')
+		}
+		
+		if (email.length < 4) {
+			alert('Please enter an email address.');
+			return;
+		}
+		if (password.length < 4) {
+			alert('Please enter a password.');
+			return;
+		}
+		firebase.auth().createUserWithEmailAndPassword(email,password).then(function() {
+			window.location = 'userInfo.html';
+
+		}, function(error) {
+			alert("i'm in error");
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			isError = true; 
+			if (errorCode == 'auth/weak-password') {
+				alert('The password is too weak.');
+			} else {
+				alert(errorMessage);
+			}
+			console.log(error);	
+		});
+	}
+
+</script>
+<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+<body align="center" style="background-image: url('http://midlandpt.com/wp-content/uploads/2015/09/Fotolia_78129040_Subscription_Monthly_M.jpg')">
+	<h1 style="color:#a4e8e8; font-family:Trebuchet MS, Helvetica, sans-serif;font-size:70px"> Create Account </h1>
+	<div class="user_form" align="center">
+		<h3>Email</h3>
+		<input style="display:inline;width:auto;border-radius: 10px; opacity: 0.8; width:250px; text-align:center; padding: 10px; border-color: #a4e8e8" type="text" id="create_username" name="createUsername"/> </br></br>
+		<h3>Password</h3> 
+		<input style="display:inline;width:auto;border-radius: 10px; opacity: 0.8; width:250px; text-align:center; padding: 10px; border-color: #a4e8e8"type="password" id="create_password" name="createPassword"/> </br></br>
+		<h3>Retype Password</h3> 
+		<input style="display:inline;width:auto;border-radius: 10px; opacity: 0.8; width:250px; text-align:center; padding: 10px; border-color: #a4e8e8"type="password" id="check_password" name="checkPassword"/> 
+		</br></br>
+		<button id="create_account" name="createAccount" onclick="signUp()">
+			Create Account
+		</button>  </br></br>
+	</div>
+</body>

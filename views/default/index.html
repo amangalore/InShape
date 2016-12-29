@@ -1,0 +1,83 @@
+{{extend 'layout.html'}}
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCwNe5k0GGnAoTbTIu4E7DDhW-hWqlyn6k",
+    authDomain: "inshape-1f517.firebaseapp.com",
+    databaseURL: "https://inshape-1f517.firebaseio.com",
+    storageBucket: "inshape-1f517.appspot.com",
+    messagingSenderId: "727790530768"
+  };
+  firebase.initializeApp(config);
+</script>
+<script type="text/javascript">
+
+  function toggleSignIn() {
+    if (firebase.auth().currentUser) {
+      firebase.auth().signOut();
+    } else {
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      if (email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+      } 
+      if (password.length < 4) {
+        alert('Please enter a password.');
+        return;
+      }
+    firebase.auth().signInWithEmailAndPassword(email, password).catch( function(error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+          //document.getElementById('sign_in').disabled = false;
+        });
+      }
+      //document.getElementById('sign_in').disabled = true;
+  }
+
+  function toggleSignUp() {
+    window.location = "signup.html"
+  }
+ 
+  function initApp() {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        var displayName = user.displayName;
+        var email = user.email;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        window.location = 'body.html';
+        //document.getElementById('sign_in').textContent = 'Sign Out';      
+      } else {
+        //document.getElementById('sign_in').textContent = "Sign In";
+      }
+      //document.getElementById('sign_in').disabled = false;
+    });
+
+     //document.getElementById('sign_in').addEventListener('click', toggleSignIn, false);
+     // document.getElementById('sign_up').addEventListener('click', handleSignUp, false);
+  }
+
+  window.onload = function() {
+    initApp();
+  };
+
+</script>
+<body style="background-image: url('http://www.hellawella.com/sites/hellawella.com/files/styles/default/public/images/ThinkstockPhotos-518201195.jpg?itok=vL40zi2T')"; "background-size:100%" align= "center", font-family:Trebuchet MS, Helvetica, sans-serif> 
+  <h1 style="color: #b30000">Email</h1>
+  <input style="display:inline;width:auto;border-radius: 10px; opacity: 0.8; width:250px; text-align:center; padding: 10px; border-color: #b30000" type="text" id="email" name="email" placeholder="Email"/> </br>
+  <h1 style="color: #b30000" >Password</h1>
+  <input style="display:inline;width:auto;border-radius: 10px; opacity: 0.8; width:250px; text-align:center; padding: 10px; border-color: #b30000" type="password" id="password" name="password" placeholder="Password"/> </br></br>
+  <button style="background-color:#b30000; border-radius: 10px;"id="sign_in" name="signin" onclick="toggleSignIn()">Sign In</button>
+  <button style="background-color:#b30000; border-radius: 10px;"id="sign_up" name="signup" onClick="toggleSignUp()">Sign Up</button>
+</body>
+

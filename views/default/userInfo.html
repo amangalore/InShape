@@ -1,0 +1,55 @@
+
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCwNe5k0GGnAoTbTIu4E7DDhW-hWqlyn6k",
+    authDomain: "inshape-1f517.firebaseapp.com",
+    databaseURL: "https://inshape-1f517.firebaseio.com",
+    storageBucket: "inshape-1f517.appspot.com",
+    messagingSenderId: "727790530768"
+  };
+  firebase.initializeApp(config);
+</script>
+<script type="text/javascript">
+	function saveUserData() {
+		var userId = firebase.auth().currentUser.uid;
+		firebase.database().ref('Users/'+userId).set({
+			firstName: document.getElementById('first_name').value,
+			lastName: document.getElementById('last_name').value,
+			birthday: document.getElementById('birthday').value,
+			weight: document.getElementById('weight').value,
+			height: document.getElementById('height').value
+		});
+		document.getElementById('first_name').value='';
+		document.getElementById('last_name').value='';
+		document.getElementById('birthday').value='';
+		document.getElementById('weight').value='';
+		document.getElementById('height').value='';
+		window.location='body.html';
+	}	
+</script>
+
+
+
+<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<body style="background-image: url('http://bpc.h-cdn.co/assets/16/17/1600x800/landscape-1461700677-best-fitness-work-out-apps.jpg');">
+	<div align="left">
+		<h1 style="color: #bbff33"> Tell us about yourself </h1>
+		<h2> First Name </h2>
+		<input id="first_name"style="border-radius: 10px; opacity: 0.8" type="text"/>
+		<h2> Last Name </h2>
+		<input id="last_name"style="border-radius: 10px; opacity: 0.8" type="text"/>
+		<h2> Birthday </h2>
+		<input id="birthday"style="border-radius: 10px; opacity: 0.8" type="date"/>
+		<h2> Weight </h2>
+		<input id="weight"style="border-radius: 10px; opacity: 0.8" type="number"/>
+		<h2> Height(in inches) </h2>
+		<input id="height"style="border-radius: 10px; opacity: 0.8" type="number"/> </br></br>	
+	</div>
+	<button align="right" style="width:250px;height:50px;background-color:#ddff99; border-color:#77b300; font-size:15px" onclick="saveUserData()"> Let's workout! </button>
+</body>

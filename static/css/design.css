@@ -1,0 +1,51 @@
+h3{
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+	font-size: 40px;
+	color: #003aa8;
+}
+
+p{
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+	font-size: 20px;
+	color:#ffffff;
+}
+
+span{
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+	color:#ffffff;
+}
+
+#myButton{
+	width:250px;
+	height:50px;
+	background-color:#003aa8; 
+	border-color:#022870; 
+	font-size:15px;
+	color:#d4e7f7;
+	border-radius: 12px;
+}
+.goHomeButton{
+	width:250px;
+	height:50px;
+	background-color:#003aa8; 
+	border-color:#022870; 
+	font-size:15px;
+	color:#d4e7f7;
+	border-radius: 12px;
+}
+
+#add{
+	width:250px;
+	height:50px;
+	background-color:#003aa8; 
+	border-color:#022870; 
+	font-size:15px;
+	color:#d4e7f7;
+	border-radius: 12px;
+
+}
+
+body{
+	background-size: 95%;
+	background-image: url('http://finerfit.com/wp-content/uploads/2014/07/fitness-3.jpg');
+}

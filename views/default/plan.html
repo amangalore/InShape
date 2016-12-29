@@ -1,0 +1,197 @@
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCwNe5k0GGnAoTbTIu4E7DDhW-hWqlyn6k",
+    authDomain: "inshape-1f517.firebaseapp.com",
+    databaseURL: "https://inshape-1f517.firebaseio.com",
+    storageBucket: "inshape-1f517.appspot.com",
+    messagingSenderId: "727790530768"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="../static/js/jquery.js"></script>
+<script type="text/javascript">
+
+	function goHome() {
+	window.location='body.html';
+}
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    var refreshIntervalId = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+            clearInterval(refreshIntervalId);
+            document.getElementById("question").style.display = 'block';
+        }
+    }, 1000);
+}
+
+
+  function goVideo() {
+    if(document.getElementById("vid").style.display == 'block'){
+      document.getElementById("vid").style.display = 'none';
+      document.getElementById("question").style.display = 'none';
+
+    }
+    else{
+      document.getElementById("vid").style.display = 'block';
+      var fiveMinutes = 60,
+      display = document.querySelector('#time');
+      startTimer(fiveMinutes, display);
+    }
+}
+
+  function pressedYes(){
+    //need to make button pink
+    document.getElementById("vid").style.display = 'none';
+    document.getElementById("question").style.display = 'none';
+}
+
+  function pressedNo(){
+    document.getElementById("question").style.display = 'none';
+     var fiveMinutes = 5,
+     display = document.querySelector('#time');
+     startTimer(fiveMinutes, display);
+}
+	window.onload = function() {
+		firebase.auth().onAuthStateChanged(function(user) {
+  			if (user) {
+  				var userId = firebase.auth().currentUser.uid;
+  				console.log(userId)
+				firebase.database().ref('Users/' + userId + '/day/Monday/workout/Workout').on('value', function(snapshot) {
+  					snapshot.forEach(function(childSnapshot) {
+    					var childKey = childSnapshot.val();
+    					console.log(childKey+"\n");
+    					var container = document.getElementById("Monday");
+   						container.innerHTML += "<button id = " + childKey + " style='color:#000' onclick='goVideo()'> "+ childKey + "</button></br>";	
+    					//var childData = childSnapshot.val();
+    					// ...
+  				});
+			});
+				firebase.database().ref('Users/' + userId + '/day/Tuesday/workout/Workout').on('value', function(snapshot) {
+  					snapshot.forEach(function(childSnapshot) {
+    					var childKey = childSnapshot.val();
+    					//console.log(childKey+"\n");
+    					var container = document.getElementById("Tuesday");
+   						container.innerHTML += "<button id = " + childKey + " style='color:#000' onclick='goVideo()'> "+ childKey + "</button></br>";	
+    					//var childData = childSnapshot.val();
+    					// ...
+  				});
+			});
+				firebase.database().ref('Users/' + userId + '/day/Wednesday/workout/Workout').on('value', function(snapshot) {
+  					snapshot.forEach(function(childSnapshot) {
+    					var childKey = childSnapshot.val();
+    					console.log(childKey+"\n");
+    					var container = document.getElementById("Wednesday");
+   						container.innerHTML += "<button id = " + childKey + " style='color:#000' onclick='goVideo()'> "+ childKey + "</button></br>";	
+    					//var childData = childSnapshot.val();
+    					// ...
+  				});
+			});
+				firebase.database().ref('Users/' + userId + '/day/Thursday/workout/Workout').on('value', function(snapshot) {
+  					snapshot.forEach(function(childSnapshot) {
+    					var childKey = childSnapshot.val();
+    					//console.log(childKey+"\n");
+    					var container = document.getElementById("Thursday");
+   						container.innerHTML += "<button id = " + childKey + " style='color:#000' onclick='goVideo()'> "+ childKey + "</button></br>";	
+    					//var childData = childSnapshot.val();
+    					// ...
+  				});
+			});
+				firebase.database().ref('Users/' + userId + '/day/Friday/workout/Workout').on('value', function(snapshot) {
+  					snapshot.forEach(function(childSnapshot) {
+    					var childKey = childSnapshot.val();
+    					//console.log(childKey+"\n");
+    					var container = document.getElementById("Friday");
+   						container.innerHTML += "<button id = " + childKey + " style='color:#000' onclick='goVideo()'> "+ childKey + "</button></br>";	
+    					//var childData = childSnapshot.val();
+    					// ...
+  				});
+			});
+				firebase.database().ref('Users/' + userId + '/day/Saturday/workout/Workout').on('value', function(snapshot) {
+  					snapshot.forEach(function(childSnapshot) {
+    					var childKey = childSnapshot.val();
+    					//console.log(childKey+"\n");
+    					var container = document.getElementById("Saturday");
+   						container.innerHTML += "<button id = " + childKey + " style='color:#000' onclick='goVideo()'> "+ childKey + "</button></br>";	
+    					//var childData = childSnapshot.val();
+    					// ...
+  				});
+			});
+				firebase.database().ref('Users/' + userId + '/day/Sunday/workout/Workout').on('value', function(snapshot) {
+  					snapshot.forEach(function(childSnapshot) {
+    					var childKey = childSnapshot.val();
+    					//console.log(childKey+"\n");
+    					var container = document.getElementById("Sunday");
+   						container.innerHTML += "<button id = " + childKey + " style='color:#000' onclick='goVideo()'> "+ childKey + "</button></br>";	
+    					//var childData = childSnapshot.val();
+    					// ...
+  				});
+			});
+			//User is signed in.
+
+  			} else {
+    		// No user is signed in.
+  }
+});
+
+	};
+</script>
+
+
+
+<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+<body style="background-image: url('http://wallpapercave.com/wp/z6gCFAz.png') ">
+<h1 style="color: #000099" align="center"> Weekly Plan </h1>
+<div class="flexboxContainer">
+	<div id="Monday"style="width: 14%">
+		<button style="width: 100%" >Monday</button>
+
+	</div>
+	<div id="Tuesday"style="width: 14%">
+		<button style="width: 100%">Tuesday</button>
+	</div>
+	<div id="Wednesday"style="width: 14%">
+		<button style="width: 100%">Wednesday</button>
+	</div>
+	<div id="Thursday"style="width: 14%">
+		<button style="width: 100%">Thursday</button>
+	</div>
+	<div id="Friday"style="width: 14%">
+		<button style="width: 100%">Friday</button>
+	</div>
+	<div id="Saturday"style="width: 14%">
+		<button style="width: 100%">Saturday</button>
+	</div>
+	<div id="Sunday"style="width: 14%"> 
+		<button style="width: 100%">Sunday</button>
+	</div>
+</div></br></br></br>
+<button style="width:250px;height:50px;background-color:#003aa8;border-color:#022870;font-size:15px;color:#d4e7f7;border-radius: 12px;"align="center" onclick='goHome()'> Return Home </button>
+<div id="vid" style="display: none;">
+  <h3>Need Motivation?</h3>
+  <iframe width="420" height="315"
+src="https://www.youtube.com/embed/qWy_aOlB45Y">
+</iframe>
+<div>You have <span id="time"></span> minutes to complete this exercise!</div>
+</div>
+<div id="question" style="display: none;">
+  <h3>Did you complete your exercise?</h3>
+  <button style="width:150px;height:30px;background-color:#003aa8;border-color:#022870;font-size:15px;color:#d4e7f7;border-radius: 12px;"align="center" onclick='pressedYes()'> Yes </button>
+   <button style="width:150px;height:30px;background-color:#003aa8;border-color:#022870;font-size:15px;color:#d4e7f7;border-radius: 12px;"align="center" onclick='pressedNo()'> No </button>
+</div>
+</body>
+</body>

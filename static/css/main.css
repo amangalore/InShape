@@ -1,0 +1,58 @@
+
+
+.user_form {
+	margin:auto;
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+}
+
+input[type=text] {
+	width: 300px;
+
+}
+
+input[type=text]:focus {
+	background-color: #ccebff;
+}
+
+body {
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+}
+
+button {
+	border-radius: 12px;
+	border: 2px solid #ccebff;
+}
+
+button:hover {
+    background-sizecolor: #d9d9d9; 
+    color: white;
+}
+
+.listObject {
+	height: 50px;
+	border: 2px;
+	border-style: solid;
+	border-radius: 8px;
+	border-color: #000099;
+	text-align: center;
+	vertical-align: middle;
+	width: 500px;
+}
+
+.checkboxStyle {
+	border: 1px;
+	border-color:#000099 ;
+}
+
+h2 {
+	color: white;
+}
+
+.flexboxContainer {
+	display: flex;
+  	flex-flow: row wrap;
+  	justify-content: space-around;
+
+}
+
+

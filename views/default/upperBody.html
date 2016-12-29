@@ -1,0 +1,179 @@
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCwNe5k0GGnAoTbTIu4E7DDhW-hWqlyn6k",
+    authDomain: "inshape-1f517.firebaseapp.com",
+    databaseURL: "https://inshape-1f517.firebaseio.com",
+    storageBucket: "inshape-1f517.appspot.com",
+    messagingSenderId: "727790530768"
+  };
+  firebase.initializeApp(config);
+</script>
+<script type="text/javascript">
+var numChildren = 0;
+var childrenArr = [];
+var isInArray = false;
+window.onload = function() {
+	firebase.database().ref('/UpperBodyWorkouts/').on('value', function(snapshot) {
+  		snapshot.forEach(function(childSnapshot) {
+    		var childKey = childSnapshot.key;
+    		if (hasWhiteSpace(childKey) == true) {
+    			//console.log(childKey)
+    			var nonWhitespaceChildKey = childKey.replace(" ", "");
+    			console.log(nonWhitespaceChildKey);
+    			var container = document.getElementById("listview");
+   				container.innerHTML += "<div id = " + nonWhitespaceChildKey + " class='listObject'> "+ childKey + "<input type='checkbox' id=" + nonWhitespaceChildKey + "></div></br>";
+    		}
+    		else {
+    			var nonWhitespaceChildKey = childKey.replace(" ", "");
+    			var container = document.getElementById("listview");
+   				container.innerHTML += "<div id = " + nonWhitespaceChildKey + " class='listObject'> "+ childKey + "<input type='checkbox' id=" + nonWhitespaceChildKey + "></div></br>";
+    		}
+    		//console.log(childKey+"\n");	
+    		//var childData = childSnapshot.val();
+    		// ...
+  		});
+	});
+};
+
+function hasWhiteSpace(s) {
+  return s.indexOf(' ') >= 0;
+}
+
+function goHome() {
+	window.location='body.html';
+}
+
+function addToPlan() {
+	//alert("I'm in addToPlan");
+
+	var userId = firebase.auth().currentUser.uid;
+	//console.log(userId);
+	var radioB = document.getElementById('radioButtons');
+	var rButtons = radioB.getElementsByTagName('input');
+	for (var i = 0; i < rButtons.length; i += 1) {
+  		//divArray.push(divs[i].innerHTML);
+  		//console.log(rButtons[i]);
+  		if (rButtons[i].checked == true) {
+  			//console.log(rButtons[i].id);
+  			var listWorkouts = document.getElementById('listview');
+			var workoutValues = listWorkouts.getElementsByTagName('input');
+			numChildren = 0;
+			childrenArr = [];
+			isInArray = false;
+			firebase.database().ref('Users/' + userId + '/day/' + rButtons[i].id + '/workout/Workout').on('value', function(snapshot) {
+  						snapshot.forEach(function(childSnapshot) {
+    						numChildren+=1;
+    						var childKey = childSnapshot.val();
+    						childrenArr.push(childKey);
+    					});
+    					// ...
+  			});
+  			for (var z = 0; z < childrenArr.length; z++) {
+  				console.log(childrenArr.length);
+  			}
+			for (var j = 0; j < workoutValues.length; j += 1) {
+				
+				if (workoutValues[j].checked == true) {
+					isInArray = false;
+					//numChildren = 0;
+					//console.log(workoutValues[j].id);					
+					
+					/*var newPostRef = firebase.database().ref('Users/' + userId + '/day/' + rButtons[i].id + '/workout/Workout');
+					var stringVal = 'Users/' + userId + '/day/' + rButtons[i].id + '/workout/Workout';
+		
+					var postVal = numChildren + 1;*/
+
+					/*firebase.database().ref('Users/' + userId + '/day/' + rButtons[i].id + '/workout/Workout').push ( {
+							postVal: workoutValues[j]
+					});*/
+
+					/*var rootRef = firebase.database().ref();
+  					var storesRef = rootRef.child('Users/' + userId + '/day/' + rButtons[i].id + '/workout/Workout');
+  					var newStoreRef = storesRef.push();
+  					storesRef.set({
+    					postVal: workoutValues[j]
+  					});*/
+
+  					/*firebase.database().ref('Users/' + userId + '/day/' + rButtons[i].id + '/workout/').child('Workout').set({
+    					postVal: workoutValues[j]
+  					});*/
+					//console.log(childrenArr.length);
+					if (childrenArr.length > 0) {
+						for (var m = 0; m < childrenArr.length; m+=1) {
+							//console.log("This is childrenArr: " + childrenArr[m]);
+							if (workoutValues[j].id == childrenArr[m]) {
+								isInArray = true;
+							}
+
+						}
+						console.log(isInArray);
+						if (isInArray == false) {
+							childrenArr.push(workoutValues[j].id);
+						}
+					}
+					else {
+						childrenArr.push(workoutValues[j].id);
+					}
+					firebase.database().ref('Users/' + userId + '/day/' + rButtons[i].id + '/workout/').set({
+						Workout: childrenArr
+					});
+					
+				}
+				else {
+				}
+
+				
+
+					// Get a key for a new Post.
+					//console.log(rButtons[i].id);
+					//console.log(workoutValues[i].value);
+  				/*var newPostKey = firebase.database().ref().child('/day/'+rButtons[i].id'/workout/Workout').push().key;
+
+  				// Write the new post's data simultaneously in the posts list and the user's post list.
+  				var updates = {};
+ 				 updates['/posts/' + newPostKey] = postData;
+  				updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+  				return firebase.database().ref().update(updates);
+			//}
+  			//console.log("true"); */ 			
+ 			}
+ 		}
+  		else {
+  			//console.log("false");
+  		}
+	}
+}
+</script>
+
+
+
+<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+<h1 style="color: #000099" align="center"> Upper Body Workouts </h1>
+<div align='center'>
+	<button style="width:250px;height:50px;background-color:#003aa8;border-color:#022870;font-size:15px;color:#d4e7f7;border-radius: 12px;"class= "option" type="button" onclick="addToPlan()">Add to Plan </button>
+	<button style="width:250px;height:50px;background-color:#003aa8;border-color:#022870;font-size:15px;color:#d4e7f7;border-radius: 12px;"class= "option" type="button" onclick="goHome()" align="center">Return to Home </button>
+  	<br>
+	<div id="radioButtons" >  
+    	<input type="radio" id='Monday' name="Monday" > <span>Mon </span>
+    	<input type="radio" id='Tuesday' name="Tuesday" > <span>Tue </span>
+    	<input type="radio" id='Wednesday' name="Wednesday" > <span>Wed </span>
+    	<input type="radio"  id='Thursday' name="Thursday" > <span>Thur </span>
+    	<input type="radio" id='Friday' name="Friday" > <span>Fri </span>
+    	<input type="radio" id='Saturday' name="Saturday" > <span>Sat </span>
+    	<input type="radio"  id='Sunday' name="Sunday" > <span>Sun </span>
+	</div>
+  	<br>
+</div>
+<div id="listview" align='center'style="overflow: scroll;">	
+  
+
+</div>
+</br>
+</br>
+

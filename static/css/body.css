@@ -1,0 +1,47 @@
+h1{
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+	font-size: 60px;
+	color: #fff682;
+}
+.header{
+	height: 100px;
+	display: -webkit-inline-box;
+	margin-bottom: 20px;
+}
+.optionbuttons {
+		background-color: #a4e8e8;
+		border-radius: 12px;
+		width: 100px;
+		height:40px ;
+		font-family:Trebuchet MS, Helvetica, sans-serif;
+}
+.logout {
+		background-color: #a4e8e8;
+		border-radius: 12px;
+		width: 100px;
+		height:40px ;
+		font-family:Trebuchet MS, Helvetica, sans-serif;
+
+}
+.myBodyImages{
+	display: block;
+}
+
+.myBodyImages:hover {
+    opacity: 0.4;
+}
+
+#divTwo{
+	color: white;
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+}
+
+#divFour{
+	color: white;
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+}
+
+#divSix{
+	color: white;
+	font-family:Trebuchet MS, Helvetica, sans-serif;
+}

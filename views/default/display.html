@@ -1,0 +1,281 @@
+<html>
+	<script>
+	document.open();
+	</script>
+	<head>
+		<title>
+			Your Workout Plan
+		</title>
+	</head>
+	<body>
+
+	<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-messaging.js"></script>
+	<script src="../static/js/jquery.js"></script>
+	<script>
+
+	//Initialize workout arrays.
+	var str_chest = new Array("Flat Bench Press: 5x5", "Incline Dumbbell Press: 4x8",
+  					"Dips: 3x8", "Cable Flies: 3x10");
+  	var str_back = new Array("Deadlifts: 4x5", "Pullups: 3x8", "Cable Rows: 3x8", "Lat Pulldowns: 3x8");
+  	var str_shoulders = new Array("Shoulder Press: 4x6", "Lateral Raises: 3x10", "Front Raises: 3x10", "Shoudler Shrugs: 3x10" );
+  	var str_legs = new Array("Barbell Squats: 5x5", "Leg Press: 4x8", "Leg Extensions: 4x8", "Hamstring Curls: 4x8", "Calf Raises: 4x12");	
+  	var hyp_chest = ["Flat Bench Press: 4x10", "Incline Dumbbell Press: 4x12",
+  					"Dips: 3x12", "Cable Flies: 3x15"];
+  	var hyp_back = ["Deadlifts: 4x10", "Pullups: 3x10", "Cable Rows: 3x12", "Lat Pulldowns: 3x12"];
+  	var hyp_shoulders = ["Shoulder Press: 4x10", "Lateral Raises: 3x15", "Front Raises: 3x15", "Shoudler Shrugs: 3x20" ];
+  	var hyp_legs = ["Barbell Squats: 4x10", "Leg Press: 4x12", "Leg Extensions: 4x12", "Hamstring Curls: 4x12", "Calf Raises: 4x20"];	
+  	var reg_biceps = ["Preacher Curls: 4x10", "Hammer Curls: 4x10", "Isolation Curls: 2x15"];
+  	var reg_triceps = ["Tricep Kickbacks: 4x12", "Tricep Pushdowns: 4x10", "Skull Crushers: 4x10"];
+  	var reg_core = ["Cable Crunches: 3x12", "Lying Leg Raises: 3x15", "Oblique Crunches: 3x12"];
+    var typearr = [];
+    var strarr = [];
+    var regarr = [];
+    var plan = [];
+    //Initialize Firebase
+  	var config = {
+    	apiKey: "AIzaSyCwNe5k0GGnAoTbTIu4E7DDhW-hWqlyn6k",
+    	authDomain: "inshape-1f517.firebaseapp.com",
+    	databaseURL: "https://inshape-1f517.firebaseio.com",
+    	storageBucket: "inshape-1f517.appspot.com",
+    	messagingSenderId: "727790530768"
+  	};
+  	firebase.initializeApp(config);
+  	
+  	var database = firebase.database();	
+  	var setup = firebase.database().ref('input/');
+	setup.on('value', function(snapshot) {
+  		//console.log(snapshot.val().Chest);
+  		typearr.push(snapshot.val().Strength);
+  		typearr.push(snapshot.val().Hypertrophy);
+  		typearr.push(snapshot.val().Cardio);
+  		strarr.push(snapshot.val().Chest);
+  		strarr.push(snapshot.val().Back);
+  		strarr.push(snapshot.val().Shoulders);
+  		strarr.push(snapshot.val().Legs);
+  		regarr.push(snapshot.val().Biceps);
+  		regarr.push(snapshot.val().Triceps);
+  		regarr.push(snapshot.val().Core);
+  		looper(typearr, strarr, regarr);
+  		//for (var i = 0; i < boolarr.length; i++) {
+    	//	console.log(boolarr[0]);
+		//}		
+	});
+
+	function goHome() {
+		window.location='body.html';
+	}
+	function weeklyPlan() {
+		window.location='plan.html';
+	}
+
+	function looper(type, stren, reg){
+		document.write("<h3 style='font-family:Trebuchet MS, Helvetica, sans-serif;font-size:40px;color:#FF0000;'>Your Workout Plan </h3>")
+		document.write("<br>");
+		document.write("<br>");
+		document.write("<br>");
+		if (type[0] === true){
+			if (strarr[0] === true){
+				for (var i = 0; i < str_chest.length; i++) {
+					plan.push(str_chest[i]);
+					document.write(str_chest[i]);
+    				document.write("<br>");
+    			}
+			}
+			if (strarr[1] === true){
+				for (var i = 0; i < str_back.length; i++) {
+					plan.push(str_back[i]);
+					document.write(str_back[i]);
+    				document.write("<br>");
+    			}
+			}
+			if (strarr[2] === true){
+				for (var i = 0; i < str_shoulders.length; i++) {
+					plan.push(str_shoulders[i]);
+					document.write(str_shoulders[i]);
+    				document.write("<br>");
+    			}   				
+			}
+			if (strarr[3] === true){
+				for (var i = 0; i < str_legs.length; i++) {
+					plan.push(str_legs[i]);
+					document.write(str_legs[i]);
+    				document.write("<br>");
+    			}   				
+			}	
+		}
+		else if (type[1] === true){
+			if (strarr[0] === true){
+				for (var i = 0; i < hyp_chest.length; i++) {
+					plan.push(hyp_chest[i]);
+					document.write(hyp_chest[i]);
+    				document.write("<br>");
+    			}
+			}
+			if (strarr[1] === true){
+				for (var i = 0; i < hyp_back.length; i++) {
+					plan.push(hyp_back[i]);
+					document.write(hyp_back[i]);
+    				document.write("<br>");
+    			}
+			}
+			if (strarr[2] === true){
+				for (var i = 0; i < hyp_shoulders.length; i++) {
+					plan.push(hyp_shoulders[i]);
+					document.write(hyp_shoulders[i]);
+    				document.write("<br>");
+    			}   				
+			}
+			if (strarr[3] === true){
+				for (var i = 0; i < hyp_legs.length; i++) {
+					plan.push(hyp_legs[i]);
+					document.write(hyp_legs[i]);
+    				document.write("<br>");
+    			}   				
+			}
+		}
+		else{
+			if (strarr[0] === true){
+				for (var i = 0; i < str_chest.length; i++) {
+					plan.push(str_chest[i]);
+					document.write(str_chest[i]);
+    				document.write("<br>");
+    			}
+			}
+			if (strarr[1] === true){
+				for (var i = 0; i < str_back.length; i++) {
+					plan.push(str_back[i]);
+					document.write(str_back[i]);
+    				document.write("<br>");
+    			}
+			}
+			if (strarr[2] === true){
+				for (var i = 0; i < str_shoulders.length; i++) {
+					plan.push(str_shoulders[i]);
+					document.write(str_shoulders[i]);
+    				document.write("<br>");
+    			}   				
+			}
+			if (strarr[3] === true){
+				for (var i = 0; i < str_legs.length; i++) {
+					plan.push(str_legs[i]);
+					document.write(str_legs[i]);
+    				document.write("<br>");
+    			}   				
+			}
+		}
+		if (regarr[0] === true){
+			for (var i = 0; i < reg_biceps.length; i++) {
+				plan.push(reg_biceps[i]);
+				document.write(reg_biceps[i]);
+    			document.write("<br>");
+    		}
+		}
+		if (regarr[1] === true){
+			for (var i = 0; i < reg_triceps.length; i++) {
+				plan.push(reg_triceps[i]);
+				document.write(reg_triceps[i]);
+    			document.write("<br>");
+    		}
+		}
+		if (regarr[2] === true){
+			for (var i = 0; i < reg_triceps.length; i++) {
+				plan.push(reg_core[i]);
+				document.write(reg_core[i]);
+    			document.write("<br>");
+    		}   				
+		}
+
+		document.write("<br>");
+		document.write("<br>");
+		document.write("<input type='checkbox' id='monday' name='monday' > Monday");
+		document.write("<br>");
+		document.write("<input type='checkbox' id='tuesday' name='teusday' > Tuesday");
+		document.write("<br>");
+		document.write("<input type='checkbox' id='wednesday' name='wednesday' > Wednesday");
+		document.write("<br>");
+		document.write("<input type='checkbox' id='thursday' name='thursday' > Thursday");
+		document.write("<br>");
+		document.write("<input type='checkbox' id='friday' name='friday' > Friday");
+		document.write("<br>");
+		document.write("<input type='checkbox' id='saturday' name='saturday' > Saturday");
+		document.write("<br>");
+		document.write("<input type='checkbox' id='sunday' name='sunday' > Sunday");
+		document.write("<br>");
+  		document.write("<button id='myButton' style='width:250px;height:50px;background-color:#8f9399; font-size:15px;color:#d4e7f7;border-radius: 12px;' onclick='weeklyPlan()'>Add to Weekly Plan</button>");
+  		document.write("<button id='buttontwo' style='width:250px;height:50px;background-color:#8f9399; font-size:15px;color:#d4e7f7;border-radius: 12px;' >Return to Home</button>")
+  		document.write("<br>");
+  		document.write("<br>");
+
+  		var adding = document.getElementById("myButton");
+  		
+  		
+  		adding.onclick = function(){
+  				var userId = firebase.auth().currentUser.uid;
+  				console.log(plan);
+  				console.log(userId);
+  				if (document.getElementById('monday').checked) {
+  					firebase.database().ref('Users/' + userId + '/day/Monday/workout/').set({
+    					Workout: plan
+  					});
+  				}
+  				if (document.getElementById('tuesday').checked) {
+  					firebase.database().ref('Users/' + userId +'/day/Tuesday/workout/').set({
+    					Workout: plan
+  					});
+
+  				}
+  				if (document.getElementById('wednesday').checked) {
+  					firebase.database().ref('Users/' + userId +'/day/Wednesday/workout/').set({
+    					Workout: plan
+  					});
+
+  				}
+  				if (document.getElementById('thursday').checked) {
+  					firebase.database().ref('Users/' + userId +'/day/Thursday/workout/').set({
+    					Workout: plan
+  					});
+
+  				}
+  				if (document.getElementById('friday').checked) {
+  					firebase.database().ref('Users/' + userId +'/day/Friday/workout/').set({
+    					Workout: plan
+  					});
+
+  				}
+  				if (document.getElementById('saturday').checked) {
+  					firebase.database().ref('Users/' + userId +'/day/Saturday/workout/').set({
+    					Workout: plan
+  					});
+
+  				}
+  				if (document.getElementById('sunday').checked) {
+  					firebase.database().ref('Users/' + userId +'/day/Sunday/workout/').set({
+    					Workout: plan
+  					});
+
+  				}
+
+  				window.location = 'plan.html';
+
+  			/*firebase.database().ref('day/').set({	
+  				Monday: document.getElementById('monday').checked,
+    			Tuesday: document.getElementById('tuesday').checked,
+    			Wednesday: document.getElementById('wednesday').checked,
+    			Thursday: document.getElementById('thursday').checked,
+    			Friday: document.getElementById('friday').checked,
+    			Saturday: document.getElementById('saturday').checked,
+    			Sunday: document.getElementById('sunday').checked,
+  			})*/
+  			/*firebase.database().ref('day/workout/').set({
+    			Workout: plan
+  			});*/
+  		}
+	}
+
+	</script>
+	</body>
+</html>
